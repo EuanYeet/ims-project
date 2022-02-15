@@ -21,9 +21,11 @@ public class CustomerDAO implements Dao<Customer> {
 	@Override
 	public Customer modelFromResultSet(ResultSet resultSet) throws SQLException {
 		Long id = resultSet.getLong("id");
-		String firstName = resultSet.getString("first_name");
+		String firstName = resultSet.getString("forename");
 		String surname = resultSet.getString("surname");
-		return new Customer(id, firstName, surname);
+		int age = resultSet.getInt("age");
+		String telephone = resultSet.getString("phone_no");
+		return new Customer(id, firstName, surname, age, telephone);
 	}
 
 	/**
@@ -35,7 +37,7 @@ public class CustomerDAO implements Dao<Customer> {
 	public List<Customer> readAll() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT * FROM customers");) {
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM user");) {
 			List<Customer> customers = new ArrayList<>();
 			while (resultSet.next()) {
 				customers.add(modelFromResultSet(resultSet));
@@ -51,7 +53,7 @@ public class CustomerDAO implements Dao<Customer> {
 	public Customer readLatest() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT * FROM customers ORDER BY id DESC LIMIT 1");) {
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM user ORDER BY id DESC LIMIT 1");) {
 			resultSet.next();
 			return modelFromResultSet(resultSet);
 		} catch (Exception e) {
@@ -70,9 +72,11 @@ public class CustomerDAO implements Dao<Customer> {
 	public Customer create(Customer customer) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection
-						.prepareStatement("INSERT INTO customers(first_name, surname) VALUES (?, ?)");) {
+						.prepareStatement("INSERT INTO user(forename, surname, age, phone_no) VALUES (?, ?, ?, ?)");) {
 			statement.setString(1, customer.getFirstName());
 			statement.setString(2, customer.getSurname());
+			statement.setInt(3, customer.getAge());
+			statement.setString(4, customer.getTelephone());
 			statement.executeUpdate();
 			return readLatest();
 		} catch (Exception e) {
@@ -85,7 +89,7 @@ public class CustomerDAO implements Dao<Customer> {
 	@Override
 	public Customer read(Long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
-				PreparedStatement statement = connection.prepareStatement("SELECT * FROM customers WHERE id = ?");) {
+				PreparedStatement statement = connection.prepareStatement("SELECT * FROM user WHERE id = ?");) {
 			statement.setLong(1, id);
 			try (ResultSet resultSet = statement.executeQuery();) {
 				resultSet.next();
@@ -109,10 +113,12 @@ public class CustomerDAO implements Dao<Customer> {
 	public Customer update(Customer customer) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection
-						.prepareStatement("UPDATE customers SET first_name = ?, surname = ? WHERE id = ?");) {
+						.prepareStatement("UPDATE user SET forename = ?, surname = ?, age = ?, phone_no = ? WHERE id = ?");) {
 			statement.setString(1, customer.getFirstName());
 			statement.setString(2, customer.getSurname());
-			statement.setLong(3, customer.getId());
+			statement.setInt(3, customer.getAge());
+			statement.setString(4, customer.getTelephone());
+			statement.setLong(5, customer.getId());
 			statement.executeUpdate();
 			return read(customer.getId());
 		} catch (Exception e) {
@@ -130,7 +136,7 @@ public class CustomerDAO implements Dao<Customer> {
 	@Override
 	public int delete(long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
-				PreparedStatement statement = connection.prepareStatement("DELETE FROM customers WHERE id = ?");) {
+				PreparedStatement statement = connection.prepareStatement("DELETE FROM user WHERE id = ?");) {
 			statement.setLong(1, id);
 			return statement.executeUpdate();
 		} catch (Exception e) {
