@@ -31,10 +31,12 @@ public class CustomerControllerTest {
 
 	@Test
 	public void testCreate() {
-		final String F_NAME = "barry", L_NAME = "scott";
-		final Customer created = new Customer(F_NAME, L_NAME);
+		final String F_NAME = "barry", L_NAME = "scott", T_PHONE = "07288765432";
+		final int AGE = 45;
+		final Customer created = new Customer(F_NAME, L_NAME, AGE, T_PHONE);
 
-		Mockito.when(utils.getString()).thenReturn(F_NAME, L_NAME);
+		Mockito.when(utils.getString()).thenReturn(F_NAME, L_NAME, T_PHONE);
+		Mockito.when(utils.getInt()).thenReturn(AGE);
 		Mockito.when(dao.create(created)).thenReturn(created);
 
 		assertEquals(created, controller.create());
@@ -46,7 +48,7 @@ public class CustomerControllerTest {
 	@Test
 	public void testReadAll() {
 		List<Customer> customers = new ArrayList<>();
-		customers.add(new Customer(1L, "jordan", "harrison"));
+		customers.add(new Customer(1L, "jordan", "harrison",25,"07288765432"));
 
 		Mockito.when(dao.readAll()).thenReturn(customers);
 
@@ -57,7 +59,7 @@ public class CustomerControllerTest {
 
 	@Test
 	public void testUpdate() {
-		Customer updated = new Customer(1L, "chris", "perrins");
+		Customer updated = new Customer(1L, "chris", "perrins",38,"07564321749");
 
 		Mockito.when(this.utils.getLong()).thenReturn(1L);
 		Mockito.when(this.utils.getString()).thenReturn(updated.getFirstName(), updated.getSurname());
