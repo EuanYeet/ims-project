@@ -71,6 +71,8 @@ public class Customer {
 	public String toString() {
 		return "id:" + id + " first name:" + firstName + " surname:" + surname + " age:" + age + " telephone:" + telephone;
 	}
+	
+	
 
 	@Override
 	public int hashCode() {

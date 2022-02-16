@@ -28,11 +28,11 @@ public enum Domain {
 		}
 	}
 
-	public static Domain getDomain(Utils utils) {
+	public static Domain getDomain() {
 		Domain domain;
 		while (true) {
 			try {
-				domain = Domain.valueOf(utils.getString().toUpperCase());
+				domain = Domain.valueOf(Utils.getString().toUpperCase());
 				break;
 			} catch (IllegalArgumentException e) {
 				LOGGER.error("Invalid selection please try again");
