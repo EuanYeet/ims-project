@@ -20,10 +20,10 @@ public class ItemController implements CrudController<Item> {
 	private ItemDAO itemDAO;
 	private Utils utils;
 
-	public ItemController(ItemDAO itemDAO, Utils utils) {
+	public ItemController(ItemDAO itemDAO) {
 		super();
 		this.itemDAO = itemDAO;
-		this.utils = utils;
+		
 	}
 
 	/**
@@ -44,13 +44,13 @@ public class ItemController implements CrudController<Item> {
 	@Override
 	public Item create() {
 		LOGGER.info("Please enter a product name");
-		String prodname = utils.getString();
+		String prodname = Utils.getString();
 		LOGGER.info("Please enter a description");
-		String desc = utils.getString();
+		String desc = Utils.getString();
 		LOGGER.info("Please enter the stock");
-		Integer stock = utils.getInt();
+		Integer stock = Utils.getInt();
 		LOGGER.info("Please enter the price");
-		Double price = utils.getDouble();
+		Double price = Utils.getDouble();
 		
 		Item item = itemDAO.create(new Item(prodname, desc, stock, price));
 		LOGGER.info("Item created");
@@ -63,14 +63,15 @@ public class ItemController implements CrudController<Item> {
 	@Override
 	public Item update() {
 		LOGGER.info("Please enter the id of the Item you would like to update");
-		Long id = utils.getLong();
-		String prodname = utils.getString();
+		Long id = Utils.getLong();
+		LOGGER.info("Please enter a name");
+		String prodname = Utils.getString();
 		LOGGER.info("Please enter a description");
-		String desc = utils.getString();
+		String desc = Utils.getString();
 		LOGGER.info("Please enter the stock");
-		Integer stock = utils.getInt();
+		Integer stock = Utils.getInt();
 		LOGGER.info("Please enter the price");
-		Double price = utils.getDouble();
+		Double price = Utils.getDouble();
 		
 		Item item = itemDAO.update(new Item(id, prodname, desc, stock, price));
 		LOGGER.info("Item Updated");
@@ -85,7 +86,7 @@ public class ItemController implements CrudController<Item> {
 	@Override
 	public int delete() {
 		LOGGER.info("Please enter the id of the Item you would like to delete");
-		Long id = utils.getLong();
+		Long id = Utils.getLong();
 		return itemDAO.delete(id);
 	}
 
