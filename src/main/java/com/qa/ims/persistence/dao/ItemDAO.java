@@ -12,6 +12,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.qa.ims.persistence.domain.Item;
+import com.qa.ims.persistence.domain.ItemOrder;
 import com.qa.ims.utils.DBUtils;
 
 public class ItemDAO implements Dao<Item> {
@@ -144,6 +145,21 @@ public class ItemDAO implements Dao<Item> {
 			LOGGER.error(e.getMessage());
 		}
 		return 0;
+	}
+
+	
+	
+	// Function for further implementation in future
+	@Override
+	public List<Item> readAll(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ItemOrder delete(Item order) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
