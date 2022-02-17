@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.qa.ims.persistence.dao.OrderDAO;
+import com.qa.ims.persistence.dao.ItemDAO;
 import com.qa.ims.persistence.dao.ItemOrderDAO;
 import com.qa.ims.persistence.domain.ItemOrder;
 import com.qa.ims.persistence.domain.Order;
@@ -21,11 +22,13 @@ public class OrderController implements CrudController<Order> {
 
 	private OrderDAO orderDAO;
 	private ItemOrderDAO itemOrderDAO;
+	private ItemDAO itemDAO;
 
-	public OrderController(OrderDAO orderDAO, ItemOrderDAO itemOrderDAO) {
+	public OrderController(OrderDAO orderDAO, ItemOrderDAO itemOrderDAO, ItemDAO itemDAO) {
 		super();
 		this.orderDAO = orderDAO;
 		this.itemOrderDAO = itemOrderDAO;
+		this.itemDAO = itemDAO;
 	}
 
 	/**
@@ -37,9 +40,26 @@ public class OrderController implements CrudController<Order> {
 		for (Order order : orders) {
 			List<ItemOrder> items = itemOrderDAO.readAll(order.getId());
 			order.setItems(items);
+			
+			double totalCost = 0;
+			for (ItemOrder item : items) {
+				double price = itemDAO.read(item.getItemID()).getPrice();
+				totalCost += (price * item.getQuantity());
+			}
+			order.setTotalCost(totalCost);
+			
 			StringBuilder sb = new StringBuilder();
-			sb.append("Order ID");
-			LOGGER.info(String.format("ID: %s", order.getId()));
+			sb.append("--------------------------------\n");
+			sb.append(String.format("Order ID: %s\n", order.getId()));
+			sb.append(String.format("User ID: %s\n", order.getUserID()));
+			sb.append(String.format("Items:\n"));
+			sb.append(String.format("Total Cost: £%.2f\n", order.getTotalCost()));
+			for (ItemOrder i : items) {
+				sb.append(String.format("\tItem ID: %s ", i.getItemID()));
+				sb.append(String.format("Quantity: %s\n", i.getQuantity()));
+			}
+			sb.append("--------------------------------");
+			LOGGER.info(sb.toString());
 		}
 		return orders;
 	}

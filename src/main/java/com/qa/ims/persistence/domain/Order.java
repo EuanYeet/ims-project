@@ -7,9 +7,19 @@ public class Order {
 
 	private Long id;
 	private Long userID;
+	private Double totalCost;
 	
 	private List<ItemOrder> items;
 	
+	
+
+	public Double getTotalCost() {
+		return totalCost;
+	}
+
+	public void setTotalCost(Double totalCost) {
+		this.totalCost = totalCost;
+	}
 
 	public Order(Long userID) {
 		super();
@@ -29,6 +39,11 @@ public class Order {
 		this.id = id;
 		this.userID = userID;
 		this.items = items;
+	}
+	
+	public Double cost() {
+		return null;
+		
 	}
 
 	public Long getId() {
