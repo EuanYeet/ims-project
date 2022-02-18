@@ -40,11 +40,6 @@ public class Order {
 		this.userID = userID;
 		this.items = items;
 	}
-	
-	public Double cost() {
-		return null;
-		
-	}
 
 	public Long getId() {
 		return id;

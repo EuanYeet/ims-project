@@ -19,7 +19,7 @@ import com.qa.ims.utils.Utils;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CustomerControllerTest {
-
+	
 	@Mock
 	private Utils utils;
 
@@ -35,8 +35,8 @@ public class CustomerControllerTest {
 		final int AGE = 45;
 		final Customer created = new Customer(F_NAME, L_NAME, AGE, T_PHONE);
 
-		Mockito.when(utils.getString()).thenReturn(F_NAME, L_NAME, T_PHONE);
-		Mockito.when(utils.getInt()).thenReturn(AGE);
+		Mockito.when(Utils.getString()).thenReturn(F_NAME, L_NAME, T_PHONE);
+		Mockito.when(Utils.getInt()).thenReturn(AGE);
 		Mockito.when(dao.create(created)).thenReturn(created);
 
 		assertEquals(created, controller.create());
@@ -76,7 +76,7 @@ public class CustomerControllerTest {
 	public void testDelete() {
 		final long ID = 1L;
 
-		Mockito.when(utils.getLong()).thenReturn(ID);
+		Mockito.when(Utils.getLong()).thenReturn(ID);
 		Mockito.when(dao.delete(ID)).thenReturn(1);
 
 		assertEquals(1L, this.controller.delete());

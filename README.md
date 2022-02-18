@@ -89,8 +89,8 @@ Give an example
 
 ## Authors
 
-* **Chris Perrins** - *Initial work* - [christophperrins](https://github.com/christophperrins)]
-* **Euan Black** - *Updated Version* - [EuanYeet(https://github.com/EuanYeet)]
+* **Chris Perrins** - *Initial work* - [christophperrins](https://github.com/christophperrins)
+* **Euan Black** - *Updated Version* - [EuanYeet](https://github.com/EuanYeet)
 
 ## License
 
