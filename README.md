@@ -5,33 +5,56 @@ A CLI (Command Line interface) based upon Java which will interact with a databa
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+STEP 1: Run IMS-Project-Schema.sql to create the database
+STEP 2: Change db.properties to match your database
+
+This should create an instance of a database on your local machine in which the project can interact with
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+Recommended prior installations
 
 ```
-Give examples
+Java (1.8 or Higher)
+Maven (3.8.4 or Higher)
 ```
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
+Java JDK Installation
 
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
+Follow video Below for step by step guide
 
 ```
-until finished
+https://www.youtube.com/watch?v=IJ-PJbvJBGs
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+Maven Installation
+
+Follow video Below for step by step guide
+
+```
+https://www.youtube.com/watch?v=3ODSQ0EpoQI
+```
+
+Eclipse Installation
+
+Download and Installation - Follow Steps on their download page selecting "ECLIPSE IDE FOR JAVA DEVELOPERS"
+
+```
+https://www.eclipse.org/downloads/packages/installer
+```
+
+Change workstation settings to fit the project
+
+```
+(Window -> Preferences -> Java -> Installed JRE) Make sure your local JDK is selected not the one that comes preinstalled with eclipse
+```
+
+```
+(Project -> Properties -> Java Compiler) Make sure the Java Compliance box is ticked otherwise certain tests will fail 
+```
+
 
 ## Running the tests
 
@@ -60,30 +83,20 @@ Explain what these tests test and why
 Give an example
 ```
 
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
 ## Built With
 
 * [Maven](https://maven.apache.org/) - Dependency Management
 
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning.
-
 ## Authors
 
-* **Chris Perrins** - *Initial work* - [christophperrins](https://github.com/christophperrins)
+* **Chris Perrins** - *Initial work* - [christophperrins](https://github.com/christophperrins)]
+* **Euan Black** - *Updated Version* - [EuanYeet(https://github.com/EuanYeet)]
 
 ## License
 
 This project is licensed under the MIT license - see the [LICENSE.md](LICENSE.md) file for details 
 
-*For help in [Choosing a license](https://choosealicense.com/)*
+## Ackknowledgements
 
-## Acknowledgments
+- ProgrammingKnowledge for his Java JDK and Maven install guide (https://www.youtube.com/channel/UCs6nmQViDpUw0nuIx9c_WvA)
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc

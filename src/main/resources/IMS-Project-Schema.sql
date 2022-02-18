@@ -23,10 +23,8 @@ CREATE TABLE IF NOT EXISTS `ims`.`item` (
 CREATE TABLE IF NOT EXISTS `ims`.`orders` (
     `id` BIGINT(11) NOT NULL AUTO_INCREMENT,
     `fk_user_id` BIGINT(11) NOT NULL,
-    `fk_item_id` BIGINT(11) NOT NULL,
     PRIMARY KEY (`id`),
-    FOREIGN KEY(fk_user_id) REFERENCES user(id),
-    FOREIGN KEY(fk_item_id) REFERENCES item(id)
+    FOREIGN KEY(fk_user_id) REFERENCES user(id)
 );
 
 CREATE TABLE IF NOT EXISTS `ims`.`itemorder` (
