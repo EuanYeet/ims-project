@@ -18,7 +18,6 @@ public class CustomerController implements CrudController<Customer> {
 	public static final Logger LOGGER = LogManager.getLogger();
 
 	private CustomerDAO customerDAO;
-	private Utils utils;
 
 	public CustomerController(CustomerDAO customerDAO) {
 		super();
