@@ -5,15 +5,21 @@ import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public final class Utils {
+public  class Utils {
 
 	private static final Logger LOGGER = LogManager.getLogger();
-	private static final Scanner scanner = new Scanner(System.in);
+	private final Scanner scanner;
 
-	private Utils() {
+	private Utils(Scanner scanner) {
+		super();
+		this.scanner = scanner;
+	}
+	
+	public Utils() {
+		scanner = new Scanner(System.in);
 	}
 
-	public static Long getLong() {
+	public Long getLong() {
 		while (!scanner.hasNextLong()) {
 			scanner.next();
 		}
@@ -21,12 +27,12 @@ public final class Utils {
 
 	}
 
-	public static String getString() {
+	public String getString() {
 		return scanner.nextLine();
 
 	}
 
-	public static Integer getInt() {
+	public Integer getInt() {
 		while (!scanner.hasNextInt()) {
 			scanner.next();
 		}
@@ -34,7 +40,7 @@ public final class Utils {
 
 	}
 
-	public static Double getDouble() {
+	public Double getDouble() {
 		while (!scanner.hasNextDouble()) {
 			scanner.next();
 		}
