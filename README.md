@@ -1,4 +1,4 @@
-Coverage: 34%
+Coverage: 67%
 # Inventory Management System - Project
 
 A CLI (Command Line interface) based upon Java which will interact with a database exhibiting CRUD (Create, Read, Update, Delete) Functionality
@@ -62,25 +62,20 @@ Explain how to run the automated tests for this system. Break down into which te
 
 ### Unit Tests 
 
-Explain what these tests test, why and how to run them
+Unit tests test parts of a system in isolation, this provides a more granular insight into potential issues.
 
 ```
-Give an example
-```
+@Test
+public void testReadAll() {
+	List<Customer> customers = new ArrayList<>();
+	customers.add(new Customer(1L, "jordan", "harrison", 25, "07288765432"));
 
-### Integration Tests 
-Explain what these tests test, why and how to run them
+	Mockito.when(dao.readAll()).thenReturn(customers);
 
-```
-Give an example
-```
+	assertEquals(customers, controller.readAll());
 
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
+	Mockito.verify(dao, Mockito.times(1)).readAll();
+}
 ```
 
 ## Built With

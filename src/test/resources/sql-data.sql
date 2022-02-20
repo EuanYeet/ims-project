@@ -1,1 +1,1 @@
-INSERT INTO user(forename,surname,age,phone_no) VALUES ('hef', 'ty', 1, '002930923');
+INSERT INTO user(forename,surname,age,phone_no) VALUES ('jordan', 'harrison', 24, '07828138122');
