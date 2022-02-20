@@ -46,10 +46,10 @@ public class CustomerController implements CrudController<Customer> {
 		String firstName = Utils.getString();
 		LOGGER.info("Please enter a surname");
 		String surname = Utils.getString();
-		LOGGER.info("Please enter an age");
-		Integer age = Utils.getInt();
 		LOGGER.info("Please enter a telephone number");
 		String telephone = Utils.getString();
+		LOGGER.info("Please enter an age");
+		Integer age = Utils.getInt();
 		
 		Customer customer = customerDAO.create(new Customer(firstName, surname,age,telephone));
 		LOGGER.info("User created");
