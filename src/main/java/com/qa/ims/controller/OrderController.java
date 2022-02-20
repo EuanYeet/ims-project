@@ -52,12 +52,14 @@ public class OrderController implements CrudController<Order> {
 			sb.append("--------------------------------\n");
 			sb.append(String.format("Order ID: %s\n", order.getId()));
 			sb.append(String.format("User ID: %s\n", order.getUserID()));
-			sb.append(String.format("Items:\n"));
 			sb.append(String.format("Total Cost: £%.2f\n", order.getTotalCost()));
+			sb.append(String.format("Items:\n"));
+			
 			for (ItemOrder i : items) {
 				sb.append(String.format("\tItem ID: %s ", i.getItemID()));
 				sb.append(String.format("Quantity: %s\n", i.getQuantity()));
 			}
+			
 			sb.append("--------------------------------");
 			LOGGER.info(sb.toString());
 		}
@@ -69,18 +71,28 @@ public class OrderController implements CrudController<Order> {
 	 */
 	@Override
 	public Order create() {
+		
 		LOGGER.info("Please enter a user ID");
 		Long userId = Utils.getLong();
 		LOGGER.info("Please enter an item ID");
 		Long itemId = Utils.getLong();
 		LOGGER.info("Please enter a Quantity");
 		int quantity = Utils.getInt();
+		
 		Order order = orderDAO.create(new Order(userId));
+		
+		
 		Long orderId = order.getId();
+		
 		ItemOrder itemOrder = itemOrderDAO.create(new ItemOrder(orderId, itemId, quantity));
-		order.getItems().add(itemOrder);
+		LOGGER.info(itemOrder);
+		List<ItemOrder> items = order.getItems();
+		items.add(itemOrder);
+		
+		order.setItems(items);
+		LOGGER.info(order);
 		LOGGER.info("Order Created");
-		return null;
+		return order;
 
 	}
 
@@ -91,7 +103,8 @@ public class OrderController implements CrudController<Order> {
 	public Order update() {
 		boolean breaker = false;
 		do {
-			ItemOrder order = new ItemOrder();
+			ItemOrder itemOrder = new ItemOrder();
+			Order order;
 			Long id = 0L;
 			
 			LOGGER.info("What would you like to update");
@@ -104,7 +117,7 @@ public class OrderController implements CrudController<Order> {
 				LOGGER.info("Please enter the id of the order you would like to edit");
 				id = Utils.getLong();
 
-				order = itemOrderDAO.read(id);
+				order = orderDAO.read(id);
 			}
 
 			switch (choice) {
@@ -113,13 +126,13 @@ public class OrderController implements CrudController<Order> {
 				Long itemID = Utils.getLong();
 				LOGGER.info("Please enter the quantity");
 				int quantity = Utils.getInt();
-				order = itemOrderDAO.add(new ItemOrder(id, itemID, quantity));
+				itemOrder = itemOrderDAO.add(new ItemOrder(id, itemID, quantity));
 				LOGGER.info("Item Added to Order");
 				break;
 			case "REMOVE":
 				LOGGER.info("Please enter the item id");
 				itemID = Utils.getLong();
-				order = itemOrderDAO.delete(new ItemOrder(id, itemID));
+				itemOrder = itemOrderDAO.delete(new ItemOrder(id, itemID));
 				LOGGER.info("Item Added to Order");
 				break;
 			case "RETURN":

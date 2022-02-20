@@ -52,15 +52,6 @@ public class ItemOrder {
 		return "ItemObject [orderId=" + orderId + ", itemID=" + itemID + ", quantity=" + quantity + "]";
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((itemID == null) ? 0 : itemID.hashCode());
-		result = prime * result + ((orderId == null) ? 0 : orderId.hashCode());
-		result = prime * result + ((quantity == null) ? 0 : quantity.hashCode());
-		return result;
-	}
 
 	@Override
 	public boolean equals(Object obj) {

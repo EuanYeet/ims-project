@@ -34,13 +34,6 @@ public class Order {
 		this.items = new ArrayList<ItemOrder>();
 	}
 
-	public Order(Long id, Long userID, List<ItemOrder> items) {
-		super();
-		this.id = id;
-		this.userID = userID;
-		this.items = items;
-	}
-
 	public Long getId() {
 		return id;
 	}
@@ -53,9 +46,7 @@ public class Order {
 		return userID;
 	}
 
-	public void setUserID(Long userID) {
-		this.userID = userID;
-	}
+	
 
 	public List<ItemOrder> getItems() {
 		return items;
@@ -68,16 +59,6 @@ public class Order {
 	@Override
 	public String toString() {
 		return "Order [id=" + id + ", userID=" + userID + ", items=" + items + "]";
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((items == null) ? 0 : items.hashCode());
-		result = prime * result + ((userID == null) ? 0 : userID.hashCode());
-		return result;
 	}
 
 	@Override
