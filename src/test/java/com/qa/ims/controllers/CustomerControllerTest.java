@@ -43,7 +43,7 @@ public class CustomerControllerTest {
 
 		LOGGER.info("Mockito When  .getString");
 		Mockito.when(Utils.getString()).thenReturn(F_NAME, L_NAME, T_PHONE);
-		Mockito.when(utils.getInt()).thenReturn(AGE);
+		Mockito.when(Utils.getInt()).thenReturn(AGE);
 		LOGGER.info("Mockito When  .create");
 		Mockito.when(dao.create(created)).thenReturn(created);
 
