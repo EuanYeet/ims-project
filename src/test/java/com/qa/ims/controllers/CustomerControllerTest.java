@@ -1,12 +1,14 @@
 package com.qa.ims.controllers;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -34,27 +36,29 @@ public class CustomerControllerTest {
 	@InjectMocks
 	private CustomerController controller;
 
+	@Before
+	public void Before() {
+		this.controller = new CustomerController(dao);
+	}
+
 	@Test
 	public void testCreate() {
-
 		String F_NAME = "barry", L_NAME = "scott", T_PHONE = "07288765432";
 		int AGE = 45;
 		Customer created = new Customer(F_NAME, L_NAME, AGE, T_PHONE);
+		try (MockedStatic<Utils> util = Mockito.mockStatic(Utils.class)) {
 
-		LOGGER.info("Mockito When  .getString");
-		Mockito.when(Utils.getString()).thenReturn(F_NAME, L_NAME, T_PHONE);
-		Mockito.when(Utils.getInt()).thenReturn(AGE);
-		LOGGER.info("Mockito When  .create");
-		Mockito.when(dao.create(created)).thenReturn(created);
+			util.when(Utils::getString).thenReturn(F_NAME, L_NAME, T_PHONE);
+			util.when(Utils::getInt).thenReturn(AGE);
+			Mockito.when(dao.create(created)).thenReturn(created);
 
-		LOGGER.info("assertEquals");
+			Customer cust = this.controller.create();
 
-		assertEquals(created, controller.create());
-		LOGGER.info("Before Verify");
-		Mockito.verify(utils, Mockito.times(1)).getString().toString();
-		Mockito.verify(utils, Mockito.times(1)).getInt();
-		Mockito.verify(dao, Mockito.times(1)).create(created);
-
+			assertEquals(cust.getFirstName(), "barry");
+			assertEquals(cust.getSurname(), "scott");
+			assertEquals(cust.getAge(), 45);
+			assertEquals(cust.getTelephone(), "07288765432");
+		}
 	}
 
 	@Test
@@ -68,29 +72,43 @@ public class CustomerControllerTest {
 
 		Mockito.verify(dao, Mockito.times(1)).readAll();
 	}
-	/*
-	 * @Test public void testUpdate() { Customer updated = new Customer(1L, "chris",
-	 * "perrins",38,"07564321749");
-	 * 
-	 * Mockito.when(this.utils.getLong()).thenReturn(1L);
-	 * Mockito.when(this.utils.getString()).thenReturn(updated.getFirstName(),
-	 * updated.getSurname());
-	 * Mockito.when(this.dao.update(updated)).thenReturn(updated);
-	 * 
-	 * assertEquals(updated, this.controller.update());
-	 * 
-	 * Mockito.verify(this.utils, Mockito.times(1)).getLong();
-	 * Mockito.verify(this.utils, Mockito.times(2)).getString();
-	 * Mockito.verify(this.dao, Mockito.times(1)).update(updated); }
-	 * 
-	 * @Test public void testDelete() { final long ID = 1L;
-	 * 
-	 * Mockito.when(Utils.getLong()).thenReturn(ID);
-	 * Mockito.when(dao.delete(ID)).thenReturn(1);
-	 * 
-	 * assertEquals(1L, this.controller.delete());
-	 * 
-	 * Mockito.verify(utils, Mockito.times(1)).getLong(); Mockito.verify(dao,
-	 * Mockito.times(1)).delete(ID); }
-	 */
+
+	@Test
+	public void testUpdate() {
+		Customer updated = new Customer(1L, "chris", "perrins", 38, "07564321749");
+
+		try (MockedStatic<Utils> util = Mockito.mockStatic(Utils.class)) {
+
+			util.when(Utils::getLong).thenReturn(1L);
+			util.when(Utils::getString).thenReturn(updated.getFirstName(), updated.getSurname(),
+					updated.getTelephone());
+			util.when(Utils::getInt).thenReturn(updated.getAge());
+			Mockito.when(dao.update(updated)).thenReturn(updated);
+
+			Customer cust = this.controller.update();
+
+			assertEquals(cust.getId(), updated.getId());
+			assertEquals(cust.getFirstName(), updated.getFirstName());
+			assertEquals(cust.getSurname(), updated.getSurname());
+			assertEquals(cust.getAge(), updated.getAge());
+			assertEquals(cust.getTelephone(), updated.getTelephone());
+		}
+	}
+
+	@Test
+	public void testDelete() {
+		final long ID = 1L;
+		try (MockedStatic<Utils> util = Mockito.mockStatic(Utils.class)) {
+
+			util.when(Utils::getLong).thenReturn(ID);
+			Mockito.when(dao.delete(ID)).thenReturn(1);
+
+			assertEquals(1L, this.controller.delete());
+			
+			int id = this.controller.delete();
+
+			assertEquals(id, ID);
+		}
+	}
+
 }
