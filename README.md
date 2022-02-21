@@ -1,4 +1,4 @@
-Coverage: 67%
+Coverage: 82%
 # Inventory Management System - Project
 
 A CLI (Command Line interface) based upon Java which will interact with a database exhibiting CRUD (Create, Read, Update, Delete) Functionality
