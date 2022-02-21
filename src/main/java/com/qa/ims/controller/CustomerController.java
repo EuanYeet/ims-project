@@ -18,12 +18,9 @@ public class CustomerController implements CrudController<Customer> {
 	public static final Logger LOGGER = LogManager.getLogger();
 
 	private CustomerDAO customerDAO;
-	private Utils utils;
-
-	public CustomerController(CustomerDAO customerDAO, Utils utils) {
+	public CustomerController(CustomerDAO customerDAO) {
 		super();
 		this.customerDAO = customerDAO;
-		this.utils = utils;
 	}
 
 	/**
@@ -44,11 +41,16 @@ public class CustomerController implements CrudController<Customer> {
 	@Override
 	public Customer create() {
 		LOGGER.info("Please enter a first name");
-		String firstName = utils.getString();
+		String firstName = Utils.getString();
 		LOGGER.info("Please enter a surname");
-		String surname = utils.getString();
-		Customer customer = customerDAO.create(new Customer(firstName, surname));
-		LOGGER.info("Customer created");
+		String surname = Utils.getString();
+		LOGGER.info("Please enter a telephone number");
+		String telephone = Utils.getString();
+		LOGGER.info("Please enter an age");
+		Integer age = Utils.getInt();
+		
+		Customer customer = customerDAO.create(new Customer(firstName, surname,age,telephone));
+		LOGGER.info("User created");
 		return customer;
 	}
 
@@ -58,12 +60,17 @@ public class CustomerController implements CrudController<Customer> {
 	@Override
 	public Customer update() {
 		LOGGER.info("Please enter the id of the customer you would like to update");
-		Long id = utils.getLong();
+		Long id = Utils.getLong();
 		LOGGER.info("Please enter a first name");
-		String firstName = utils.getString();
+		String firstName = Utils.getString();
 		LOGGER.info("Please enter a surname");
-		String surname = utils.getString();
-		Customer customer = customerDAO.update(new Customer(id, firstName, surname));
+		String surname = Utils.getString();
+		LOGGER.info("Please enter an age");
+		Integer age = Utils.getInt();
+		LOGGER.info("Please enter a telephone number");
+		String telephone = Utils.getString();
+		
+		Customer customer = customerDAO.update(new Customer(id, firstName, surname, age, telephone));
 		LOGGER.info("Customer Updated");
 		return customer;
 	}
@@ -76,7 +83,7 @@ public class CustomerController implements CrudController<Customer> {
 	@Override
 	public int delete() {
 		LOGGER.info("Please enter the id of the customer you would like to delete");
-		Long id = utils.getLong();
+		Long id = Utils.getLong();
 		return customerDAO.delete(id);
 	}
 
