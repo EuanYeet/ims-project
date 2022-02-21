@@ -18,12 +18,12 @@ public class CustomerDAOTest {
 	@Before
 	public void setup() {
 		DBUtils.connect();
-		DBUtils.getInstance().init("src/test/resources/sql-schema.sql", "src/test/resources/sql-data.sql");
+		DBUtils.getInstance().init("src/test/resources/IMS-Project-Test-User.sql", "src/test/resources/sql-data.sql");
 	}
 
 	@Test
 	public void testCreate() {
-		final Customer created = new Customer(2L, "chris", "perrins", 24, "07828138122");
+		final Customer created = new Customer(2L,"jordan", "harrison", 24, "07828138122");
 		assertEquals(created, DAO.create(created));
 	}
 

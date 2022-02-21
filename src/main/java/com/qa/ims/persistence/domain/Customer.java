@@ -51,9 +51,7 @@ public class Customer {
 		return age;
 	}
 	
-	public String getStringAge() {
-		return age.toString();
-	}
+	
 
 	public void setAge(int age) {
 		this.age = age;
