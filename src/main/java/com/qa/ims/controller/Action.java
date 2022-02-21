@@ -45,11 +45,11 @@ public enum Action {
 	 * 
 	 * @return Action type
 	 */
-	public static Action getAction(Utils utils) {
+	public static Action getAction() {
 		Action action = null;
 		do {
 			try {
-				action = Action.valueOf(utils.getString().toUpperCase());
+				action = Action.valueOf(Utils.getString().toUpperCase());
 			} catch (IllegalArgumentException e) {
 				LOGGER.error("Invalid selection please try again");
 			}

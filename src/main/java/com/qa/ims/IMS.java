@@ -6,22 +6,32 @@ import org.apache.logging.log4j.Logger;
 import com.qa.ims.controller.Action;
 import com.qa.ims.controller.CrudController;
 import com.qa.ims.controller.CustomerController;
+import com.qa.ims.controller.ItemController;
+import com.qa.ims.controller.OrderController;
 import com.qa.ims.persistence.dao.CustomerDAO;
+import com.qa.ims.persistence.dao.ItemDAO;
+import com.qa.ims.persistence.dao.ItemOrderDAO;
+import com.qa.ims.persistence.dao.OrderDAO;
 import com.qa.ims.persistence.domain.Domain;
 import com.qa.ims.utils.DBUtils;
-import com.qa.ims.utils.Utils;
 
 public class IMS {
 
 	public static final Logger LOGGER = LogManager.getLogger();
 
 	private final CustomerController customers;
-	private final Utils utils;
+
+	private final ItemController items;
+	private final OrderController orders;
 
 	public IMS() {
-		this.utils = new Utils();
 		final CustomerDAO custDAO = new CustomerDAO();
-		this.customers = new CustomerController(custDAO, utils);
+		final ItemDAO itemDAO = new ItemDAO();
+		final OrderDAO orderDAO = new OrderDAO();
+		final ItemOrderDAO itemOrderDAO = new ItemOrderDAO();
+		this.customers = new CustomerController(custDAO);
+		this.items = new ItemController(itemDAO);
+		this.orders = new OrderController(orderDAO, itemOrderDAO, itemDAO);
 	}
 
 	public void imsSystem() {
@@ -33,7 +43,9 @@ public class IMS {
 			LOGGER.info("Which entity would you like to use?");
 			Domain.printDomains();
 
-			domain = Domain.getDomain(utils);
+
+			domain = Domain.getDomain();
+
 
 			domainAction(domain);
 
@@ -50,8 +62,10 @@ public class IMS {
 				active = this.customers;
 				break;
 			case ITEM:
+				active = this.items;
 				break;
 			case ORDER:
+				active = this.orders;
 				break;
 			case STOP:
 				return;
@@ -62,7 +76,8 @@ public class IMS {
 			LOGGER.info(() ->"What would you like to do with " + domain.name().toLowerCase() + ":");
 
 			Action.printActions();
-			Action action = Action.getAction(utils);
+			Action action = Action.getAction();
+
 
 			if (action == Action.RETURN) {
 				changeDomain = true;

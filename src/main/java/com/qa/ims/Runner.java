@@ -8,9 +8,15 @@ public class Runner {
 	public static final Logger LOGGER = LogManager.getLogger();
 
 	public static void main(String[] args) {
+		try {
 		IMS ims = new IMS();
 		ims.imsSystem();
 		LOGGER.info("SO LONG!");
+		} catch(Exception e) {
+			LOGGER.info(e);
+			throw e;
+		} 
+
 	}
 
 }
